@@ -66,6 +66,7 @@ const Navbar = () => {
     { name: 'CEO', href: '#ceo' },
     { name: 'Incorporators', href: '#board' },
     { name: 'Partners', href: '#partners' },
+    { name: 'Latest Update', href: '#latest-update' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Impact', href: '#impact' },
     { name: 'Join Us', href: '#membership' },
@@ -622,7 +623,7 @@ How can I assist you today?`;
         </div>
         <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white space-y-8 animate-reveal">
-            <span className="inline-block bg-healthTeal/20 backdrop-blur-md text-healthTeal border border-healthTeal/30 px-5 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase">Motto: HEALTH IS LIFE!</span>
+            <a href="#latest-update" className="inline-block bg-healthTeal/20 backdrop-blur-md text-healthTeal border border-healthTeal/30 px-5 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase hover:bg-healthTeal/30 transition-all cursor-pointer">Latest Update</a>
             <h1 className="text-5xl md:text-7xl font-bold leading-[1.1]">Advancing <span className="text-medicalBlue inline-block hover:scale-105 transition-transform duration-500">Health Equity</span> and Empowering Communities</h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-xl leading-relaxed font-light">PHIL Inc. is a registered nonprofit health organization committed to improving health outcomes through education, advocacy, and sustainable programs across Liberia.</p>
             <div className="flex flex-wrap gap-5 pt-4">
@@ -1379,6 +1380,18 @@ How can I assist you today?`;
                   </button>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Update Section */}
+      <section id="latest-update" className="py-32 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <SectionHeading subtitle="News & Events" title="Latest Updates" centered />
+          <div className="max-w-4xl mx-auto text-center mt-20 reveal-on-scroll">
+            <div className="p-20 bg-gray-50 rounded-[3.5rem] border border-dashed border-gray-200">
+              <p className="text-gray-400 text-lg font-light">No updates are available at this time. Please check back later for news on our latest initiatives and community impact.</p>
             </div>
           </div>
         </div>
