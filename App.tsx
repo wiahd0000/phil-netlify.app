@@ -20,6 +20,36 @@ const INSTAGRAM_URL = "https://www.instagram.com/philjuly2_2022?igsh=enIyOHdmcHR
 const YOUTUBE_URL = "https://www.youtube.com/@ProgressiveHealthInitiativeofL";
 const CEO_IMAGE = "https://res.cloudinary.com/dew5uptfr/image/upload/v1771071779/ceoreal_mjxffh.jpg";
 
+const HERO_IMAGES = [
+  "https://res.cloudinary.com/dew5uptfr/image/upload/v1771076652/phil_page_dynxko.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639467/bk1_q5fabz.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639465/bk4_plluw1.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639464/bk5_ozvmtf.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639466/bk2_am81vx.jpg"
+];
+
+const TRAINING_IMAGES = [
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/cet01_ajshcs.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639464/pst1_a2urdv.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639464/pst02_tmq3hi.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/pst3_vzlfie.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639463/aud1_wpps3w.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/aud3_bfsi48.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/aud2_dfeely.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639455/cet012_hfvnxo.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639455/cet013_iwloez.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639455/cet05_uxtzhn.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639455/cet011_k91lrv.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639456/cet08_uyovtv.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639455/cet010_qt5tnf.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639456/cet07_cl6mg3.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639456/cet04_gwekmh.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/cet03_gvwdmn.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/cet3_iipj6l.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/cet1_xe7ivp.jpg",
+  "https://res.cloudinary.com/diblckeu1/image/upload/v1777639457/cet02_c0dynk.jpg"
+];
+
 // Scroll Reveal Hook
 const useScrollReveal = () => {
   useEffect(() => {
@@ -136,6 +166,22 @@ const App: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [sessionId] = useState(() => Math.random().toString(36).substring(7));
   const [showSettings, setShowSettings] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentUpdateSlide, setCurrentUpdateSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentUpdateSlide((prev) => (prev + 1) % TRAINING_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const WELCOME_MESSAGE = `### **Welcome to the PHIL Assistant** 🏥
 *Advancing Health Equity and Empowering Communities in Liberia*
@@ -618,8 +664,30 @@ How can I assist you today?`;
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img src="https://res.cloudinary.com/dew5uptfr/image/upload/v1771076652/phil_page_dynxko.jpg" className="w-full h-full object-cover animate-slow-zoom" alt="NGO community work" />
+          <AnimatePresence>
+            <motion.img 
+              key={currentSlide}
+              src={HERO_IMAGES[currentSlide]} 
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full object-cover" 
+              alt="PHIL Inc. Activities" 
+            />
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-r from-profNavy/95 via-profNavy/75 to-profNavy/30"></div>
+          
+          {/* Slide Indicators */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+            {HERO_IMAGES.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-1.5 transition-all duration-500 rounded-full ${currentSlide === idx ? 'w-8 bg-medicalBlue' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+              />
+            ))}
+          </div>
         </div>
         <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white space-y-8 animate-reveal">
@@ -1389,9 +1457,61 @@ How can I assist you today?`;
       <section id="latest-update" className="py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-6">
           <SectionHeading subtitle="News & Events" title="Latest Updates" centered />
-          <div className="max-w-4xl mx-auto text-center mt-20 reveal-on-scroll">
-            <div className="p-20 bg-gray-50 rounded-[3.5rem] border border-dashed border-gray-200">
-              <p className="text-gray-400 text-lg font-light">No updates are available at this time. Please check back later for news on our latest initiatives and community impact.</p>
+          
+          <div className="max-w-6xl mx-auto mt-20 reveal-on-scroll">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-black text-profNavy mb-4 uppercase tracking-tight">
+                PHIL INC. ONE DAY VOLUNTARY IN-SERVICE TRAINING PROGRAM
+              </h3>
+              <div className="w-24 h-1 bg-medicalBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div className="relative group px-12 lg:px-24">
+              <div className="relative h-[400px] md:h-[600px] rounded-[3.5rem] overflow-hidden shadow-2xl border-8 border-white">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={currentUpdateSlide}
+                    src={TRAINING_IMAGES[currentUpdateSlide]} 
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.8, ease: "anticipate" }}
+                    className="absolute inset-0 w-full h-full object-cover" 
+                    alt="Training Program Session" 
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-10 left-10 text-white">
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-80 mb-2">Training Session Photo</p>
+                  <p className="text-2xl font-black">{currentUpdateSlide + 1} / {TRAINING_IMAGES.length}</p>
+                </div>
+              </div>
+
+              {/* Navigation Controls */}
+              <button 
+                onClick={() => setCurrentUpdateSlide((prev) => (prev - 1 + TRAINING_IMAGES.length) % TRAINING_IMAGES.length)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-16 h-16 bg-white shadow-xl rounded-full flex items-center justify-center text-profNavy hover:bg-medicalBlue hover:text-white transition-all z-20 group-hover:scale-110 active:scale-95"
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </button>
+              <button 
+                onClick={() => setCurrentUpdateSlide((prev) => (prev + 1) % TRAINING_IMAGES.length)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-16 h-16 bg-white shadow-xl rounded-full flex items-center justify-center text-profNavy hover:bg-medicalBlue hover:text-white transition-all z-20 group-hover:scale-110 active:scale-95"
+              >
+                <ChevronRight className="w-8 h-8" />
+              </button>
+
+              {/* Progress Dots */}
+              <div className="flex justify-center gap-2 mt-12 overflow-x-auto pb-4 px-4 scrollbar-hide container mx-auto">
+                {TRAINING_IMAGES.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentUpdateSlide(idx)}
+                    className={`h-1.5 transition-all duration-300 rounded-full shrink-0 ${currentUpdateSlide === idx ? 'w-8 bg-medicalBlue' : 'w-2 bg-gray-200'}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
