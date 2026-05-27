@@ -105,40 +105,101 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-          <LogoMotion isScrolled={isScrolled} />
-          <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled ? 'text-profNavy' : 'text-white'}`}>PHIL Inc.</span>
-        </div>
+    <>
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-6'}`}>
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+            <LogoMotion isScrolled={isScrolled} />
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled ? 'text-profNavy' : 'text-white'}`}>PHIL Inc.</span>
+          </div>
 
-        <div className="hidden lg:flex items-center space-x-8">
-          {menuItems.map((item) => (
-            <a key={item.name} href={item.href} className={`text-sm font-medium transition-all hover:text-medicalBlue hover:translate-y-[-2px] ${isScrolled ? 'text-profNavy' : 'text-white'}`}>
-              {item.name}
+          <div className="hidden xl:flex items-center space-x-6 2xl:space-x-8">
+            {menuItems.map((item) => (
+              <a key={item.name} href={item.href} className={`text-sm font-semibold transition-all hover:text-medicalBlue hover:translate-y-[-2px] ${isScrolled ? 'text-profNavy' : 'text-white'}`}>
+                {item.name}
+              </a>
+            ))}
+            <a href="#donate" className="bg-medicalBlue hover:bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold transition-all shadow-lg hover:scale-105 active:scale-95">
+              Donate Now
             </a>
-          ))}
-          <a href="#donate" className="bg-medicalBlue hover:bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold transition-all shadow-lg hover:scale-105 active:scale-95">
-            Donate Now
-          </a>
-        </div>
+          </div>
 
-        <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-white outline-none">
-          {isOpen ? <X className={isScrolled ? 'text-profNavy' : 'text-white'} /> : <Menu className={isScrolled ? 'text-profNavy' : 'text-white'} />}
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 flex flex-col space-y-4 animate-fadeInUp">
-          {menuItems.map((item) => (
-            <a key={item.name} href={item.href} className="text-profNavy text-lg font-medium border-b border-gray-100 pb-2 hover:text-medicalBlue transition-colors" onClick={() => setIsOpen(false)}>
-              {item.name}
-            </a>
-          ))}
-          <a href="#donate" className="bg-medicalBlue text-white text-center py-4 rounded-xl font-bold shadow-lg" onClick={() => setIsOpen(false)}>Donate Now</a>
+          <button onClick={() => setIsOpen(true)} className="xl:hidden p-2 rounded-xl border border-white/20 hover:bg-white/10 transition-all outline-none" style={{ borderColor: isScrolled ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255, 255, 255, 0.2)' }}>
+            <Menu className={isScrolled ? 'text-profNavy' : 'text-white'} />
+          </button>
         </div>
-      )}
-    </nav>
+      </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-profNavy/60 z-[100] backdrop-blur-sm"
+            />
+
+            {/* Sidebar Drawer */}
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+              className="fixed right-0 top-0 h-full w-[310px] sm:w-[380px] bg-white z-[101] shadow-2xl flex flex-col overflow-hidden"
+            >
+              {/* Header inside side drawer */}
+              <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                <div className="flex items-center space-x-3">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden border border-medicalBlue bg-white shadow-sm">
+                    <img src={LOGO_URL} alt="PHIL Inc. Logo" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="font-bold text-lg text-profNavy tracking-tight">PHIL Inc.</span>
+                </div>
+                <button 
+                  onClick={() => setIsOpen(false)} 
+                  className="p-2.5 hover:bg-gray-100 rounded-full text-gray-500 hover:text-profNavy transition-all outline-none"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Menu items list inside side drawer */}
+              <div className="flex-grow overflow-y-auto px-6 py-8 space-y-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-4">Navigation Menu</p>
+                {menuItems.map((item) => (
+                  <a 
+                    key={item.name} 
+                    href={item.href} 
+                    className="flex items-center justify-between px-3 py-3.5 rounded-2xl text-profNavy hover:text-medicalBlue hover:bg-blue-50/50 font-semibold transition-all group"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span>{item.name}</span>
+                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-medicalBlue group-hover:translate-x-1 transition-all" />
+                  </a>
+                ))}
+              </div>
+
+              {/* Footer inside side drawer */}
+              <div className="p-6 border-t border-gray-100 bg-gray-50 space-y-4">
+                <a 
+                  href="#donate" 
+                  className="block bg-medicalBlue hover:bg-blue-600 text-white text-center py-4 rounded-2xl font-bold tracking-wide shadow-lg shadow-blue-200 transition-all hover:translate-y-[-1px] active:translate-y-0" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Donate Now
+                </a>
+                <div className="text-center text-xs text-gray-400 font-medium pb-4">
+                  <p>Advancing Health Equity in Liberia</p>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
@@ -221,7 +282,9 @@ What would you like to learn about first?`;
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (chatMessages.length > 0) {
+      scrollToBottom();
+    }
   }, [chatMessages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -877,7 +940,7 @@ How can I assist you today?`;
         <div className="container mx-auto px-6">
           <SectionHeading subtitle="Our Network" title="Institution Partners" centered />
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
             {PARTNERS.map((partner, idx) => (
               <div 
                 key={partner.id} 
@@ -912,12 +975,14 @@ How can I assist you today?`;
             <div>
               <SectionHeading subtitle="Who We Are" title="Dedicated to a Healthier Liberia" />
               <p className="text-gray-600 mb-10 leading-relaxed text-xl font-light reveal-on-scroll">Progressive Health Initiative of Liberia (PHIL Inc.) is a registered not-for-profit health NGO. We specialize in advancing health equity, empowering communities, and improving access to healthcare services across the underserved sectors of Liberia.</p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 reveal-on-scroll">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-16 reveal-on-scroll">
                 {CORE_VALUES.map((val) => (
-                  <div key={val.title} className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:translate-y-[-8px] transition-all duration-500 group">
-                    <div className="text-medicalBlue mb-6 group-hover:scale-110 group-hover:rotate-[10deg] transition-transform duration-500">{val.icon}</div>
-                    <h5 className="font-bold text-profNavy mb-2 text-lg">{val.title}</h5>
-                    <p className="text-gray-500 text-xs leading-relaxed font-medium uppercase tracking-wider">{val.description}</p>
+                  <div key={val.title} className="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:translate-y-[-8px] transition-all duration-500 group flex flex-col justify-between overflow-hidden">
+                    <div>
+                      <div className="text-medicalBlue mb-6 group-hover:scale-110 group-hover:rotate-[10deg] transition-transform duration-500">{val.icon}</div>
+                      <h5 className="font-bold text-profNavy mb-2 text-base sm:text-lg break-words min-w-0">{val.title}</h5>
+                      <p className="text-gray-500 text-xs leading-relaxed font-semibold uppercase tracking-wider">{val.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1086,7 +1151,7 @@ How can I assist you today?`;
       <section id="impact" className="py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-6">
           <SectionHeading subtitle="Measured Success" title="Tangible Impact Across Liberia" centered />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
             {ACHIEVEMENTS.map((ach, idx) => (
               <div 
                 key={ach.label} 
