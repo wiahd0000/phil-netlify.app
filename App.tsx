@@ -975,12 +975,12 @@ How can I assist you today?`;
             <div>
               <SectionHeading subtitle="Who We Are" title="Dedicated to a Healthier Liberia" />
               <p className="text-gray-600 mb-10 leading-relaxed text-xl font-light reveal-on-scroll">Progressive Health Initiative of Liberia (PHIL Inc.) is a registered not-for-profit health NGO. We specialize in advancing health equity, empowering communities, and improving access to healthcare services across the underserved sectors of Liberia.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-16 reveal-on-scroll">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-16 reveal-on-scroll">
                 {CORE_VALUES.map((val) => (
-                  <div key={val.title} className="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:translate-y-[-8px] transition-all duration-500 group flex flex-col justify-between overflow-hidden">
+                  <div key={val.title} className="bg-white p-5 sm:p-6 md:p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:translate-y-[-8px] transition-all duration-500 group flex flex-col justify-between overflow-hidden">
                     <div>
-                      <div className="text-medicalBlue mb-6 group-hover:scale-110 group-hover:rotate-[10deg] transition-transform duration-500">{val.icon}</div>
-                      <h5 className="font-bold text-profNavy mb-2 text-base sm:text-lg break-words min-w-0">{val.title}</h5>
+                      <div className="text-medicalBlue mb-5 group-hover:scale-110 group-hover:rotate-[10deg] transition-transform duration-500">{val.icon}</div>
+                      <h5 className="font-bold text-profNavy mb-2 text-base sm:text-lg lg:text-base xl:text-lg break-words min-w-0 tracking-tight">{val.title}</h5>
                       <p className="text-gray-500 text-xs leading-relaxed font-semibold uppercase tracking-wider">{val.description}</p>
                     </div>
                   </div>
