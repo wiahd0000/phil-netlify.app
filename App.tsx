@@ -355,7 +355,7 @@ How can I assist you today?`;
                 - Motto: HEALTH IS LIFE!
                 - Mission: Advancing health equity and empowering underserved communities across Liberia through sustainable healthcare solutions and advocacy.
                 - Programs: Public Health Promotion, Mental Health & Psychosocial Support, Water, Sanitation & Hygiene (WASH), Sexual and Reproductive Health, Maternal and Child Health, Nutrition, Youth Empowerment, Emergency Health Response.
-                - Contact: philliberiajuly2@gmail.com, +231 775 001 972, +231 880 934 689.
+                - Contact: info@philincliberia.org, +231 775 001 972, +231 880 934 689.
                 - Location: Maryland County, Liberia.
                 
                 Response Guidelines:
@@ -392,7 +392,7 @@ How can I assist you today?`;
             - Motto: HEALTH IS LIFE!
             - Mission: Advancing health equity and empowering underserved communities across Liberia through sustainable healthcare solutions and advocacy.
             - Programs: Public Health Promotion, Mental Health & Psychosocial Support, Water, Sanitation & Hygiene (WASH), Sexual and Reproductive Health, Maternal and Child Health, Nutrition, Youth Empowerment, Emergency Health Response.
-            - Contact: philliberiajuly2@gmail.com, +231 775 001 972, +231 880 934 689.
+            - Contact: info@philincliberia.org, +231 775 001 972, +231 880 934 689.
             - Location: Maryland County, Liberia.
             
             Response Guidelines:
@@ -1645,7 +1645,7 @@ How can I assist you today?`;
                 <li className="flex gap-4">
                   <Mail className="w-6 h-6 text-healthTeal shrink-0" />
                   <span>
-                    <a href="mailto:philliberiajuly2@gmail.com" className="hover:text-white transition-colors">philliberiajuly2@gmail.com</a>
+                    <a href="mailto:info@philincliberia.org" className="hover:text-white transition-colors">info@philincliberia.org</a>
                   </span>
                 </li>
               </ul>
